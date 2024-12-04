@@ -1,15 +1,23 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { my_project_backend } from 'declarations/my_project_backend/index';
-let greeting = ref('');
+let lastMsg = ref('');
+
+onMounted(async () => {
+  lastMsg.value = await getMessage();
+})
 
 async function handleSubmit(e) {
   e.preventDefault();
   const target = e.target;
-  const name = target.querySelector('#name').value;
-  await my_project_backend.greet(name).then((response) => {
-    greeting.value = response;
-  });
+  const message = target.querySelector('#message').value;
+  await my_project_backend.set_msg(message);
+  lastMsg.value = await getMessage();
+}
+
+async function getMessage() {
+  const latestMesage = await my_project_backend.get_msg();
+  return latestMesage;
 }
 </script>
 
@@ -19,10 +27,10 @@ async function handleSubmit(e) {
     <br />
     <br />
     <form action="#" @submit="handleSubmit">
-      <label for="name">Enter your name: &nbsp;</label>
-      <input id="name" alt="Name" type="text" />
+      <label for="message">Enter your message: &nbsp;</label>
+      <input id="message" alt="Message" type="text" />
       <button type="submit">Click Me!</button>
     </form>
-    <section id="greeting">{{ greeting }}</section>
+    <p>{{lastMsg}}</p>
   </main>
 </template>

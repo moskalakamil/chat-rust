@@ -5,16 +5,15 @@ thread_local! {
 }
 
 #[ic_cdk::update]
-fn set_msg(name: String) -> String {
-    //  COUNTER.with(|count| *count.borrow_mut() = n);
+fn set_msg(new_msg: String) {
     MSG.with(|msg| {
-        *msg.borrow_mut() = new_msg;
+        *msg.borrow_mut() = new_msg
     })
 }
 
 #[ic_cdk::query]
 fn get_msg() -> String {
-    MSG.with(|msg| msg.borrow().clone());
+    MSG.with(|msg| msg.borrow().clone())
 }
 
 #[ic_cdk::query]
