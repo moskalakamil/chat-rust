@@ -23,14 +23,72 @@ async function getChat() {
 </script>
 
 <template>
-  <main>
-    <br />
-    <br />
-    <form action="#" @submit="handleSubmit">
+  <main class="chat-container">
+    <h1>Chat Room</h1>
+    <form action="#" @submit="handleSubmit" class="chat-form">
       <label for="message">Enter your message: &nbsp;</label>
-      <input id="message" alt="Message" type="text" />
-      <button type="submit">Click Me!</button>
+      <input id="message" alt="Message" type="text" class="message-input" />
+      <button type="submit" class="submit-btn">Send</button>
     </form>
-    <p>{{chat.toString()}}</p>
+    <ul class="chat-list">
+      <li v-for="(message, index) in chat" :key="index" class="chat-message">
+        {{ message }}
+      </li>
+    </ul>
   </main>
 </template>
+
+<style scoped>
+.chat-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.chat-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.message-input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.submit-btn {
+  padding: 8px 16px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.submit-btn:hover {
+  background-color: #0056b3;
+}
+
+.chat-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.chat-message {
+  padding: 10px;
+  margin: 5px 0;
+  background-color: #e6f7ff;
+  border: 1px solid #91d5ff;
+  border-radius: 4px;
+}
+</style>
